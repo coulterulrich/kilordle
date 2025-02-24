@@ -22,12 +22,13 @@ _____________     _____________     _____________     _____________
 
 # Programmatic Docs
 
-## `kilowordle(wordleWordList, boardLength = 1000)`
+## `kilowordle(wordleWords, allWords, boardLength = 1000)`
 - `.wordles`: List of all `wordle` board objects
 - `.guesses`: List of previous guesses
 - `.solved`: Count of solved boards
-- `.guess(word)`: Guesses a word
-- `.print()`: Prints the top boards
+- `.guess(word)`: Guesses a word, returns if the word is valid
+- `.guessMany(words)`: Guesses a list of words, DOES NOT check word validity
+- `.print(count = 12, columns = 4)`: Prints the remaining top boards and their clues
 
 
 ## `wordle(word)`

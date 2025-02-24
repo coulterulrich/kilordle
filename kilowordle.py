@@ -102,6 +102,10 @@ class kilowordle:
             if wordle.solved:
                 self.solved += 1
         return True
+            
+    def guessMany(self, words):
+        for word in words:
+            self.guess(word)
                 
     def print(self, length = 12, columns = 4):
         topBoards = sorted(
