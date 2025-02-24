@@ -1,5 +1,5 @@
-# Command Usage
-1. Run `kilowordle.py`
+# Play Game
+1. Run `play.py`
 2. Guess 5 letter words to solve the wordles
 
 # Clues
@@ -22,7 +22,14 @@ _____________     _____________     _____________     _____________
 
 # Programmatic Docs
 
-## `kilowordle(wordleWords, allWords, boardLength = 1000)`
+## Source
+- `kilowordle.py`: Class library
+- `play.py`: Sample run game script
+- `words.py`: The wordle and valid word list
+
+## Classes
+
+### `kilowordle(wordleWords, allWords, boardLength = 1000)`
 - `.wordles`: List of all `wordle` board objects
 - `.guesses`: List of previous guesses
 - `.solved`: Count of solved boards
@@ -31,7 +38,7 @@ _____________     _____________     _____________     _____________
 - `.print(count = 12, columns = 4)`: Prints the remaining top boards and their clues
 
 
-## `wordle(word)`
+### `wordle(word)`
 - `.word`: The secret word of this board
 - `.correct`: List of 5 booleans for correctly guessed places
 - `.clues`: List of previous clues, each clue is a list of 5 integers from the given guess word
