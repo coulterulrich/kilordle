@@ -1,6 +1,7 @@
 # Play Game
 1. Run `play.py`
 2. Guess 5 letter words to solve the wordles
+3. Input `q` or `quit` to exit
 
 # Clues
 1. `#` is correct
