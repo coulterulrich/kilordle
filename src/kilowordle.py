@@ -53,11 +53,11 @@ class wordle:
             # in the case of multiple letters
             # mark misplaced if the current clue count is below the letter frequency
             letterCount = 0
-            for j in range(len(self.word)):
-                if self.word[j] == letter:
+            for wordLetter in self.word:
+                if wordLetter == letter:
                     letterCount += 1
             for j in range(len(clue)):
-                if clue[j] == 2 and word[j] == letter:
+                if clue[j] > 0 and word[j] == letter:
                     letterCount -= 1
             if (letterCount > 0):
                 clue[i] = 1
@@ -69,11 +69,18 @@ class wordle:
         self.solved = all(self.correct)
         
         # calculate score sort value
+        correctMask = 0
+        misplacedMask = 0
         self.score = 0
         for i in range(min(5, len(self.clues))):
             clue = self.clues[len(self.clues) - i - 1]
             for j in range(len(clue)):
-                self.score += clue[j]
+                code = clue[j]
+                if code == 2 and (correctMask & (1 << j)) != (1 << j):
+                    self.score += 25 # correct letter
+                    correctMask |= 1 << j
+                elif code == 1:
+                    self.score += 1
         
     
 class kilowordle:
@@ -106,7 +113,7 @@ class kilowordle:
         for word in words:
             self.guess(word)
                 
-    def print(self, length = 12, columns = 4):
+    def print(self, length = 12, columns = 4, debug = False):
         topBoards = sorted(
             [w for w in self.wordles if not w.solved],  # only boards not solved
             key=lambda w: -w.score  # sort by sort value
@@ -122,6 +129,20 @@ class kilowordle:
             print()
         
         for i in range(0, length, columns):
+            if debug:
+                # print debug word
+                for k in range(columns):
+                    wordleIndex = length - (i + k) - 1
+                    if wordleIndex < 0:
+                        break
+                    if k != 0:
+                        print('     ', end='')
+                    wordle = topBoards[wordleIndex]
+                    print('    ', end='')
+                    print(wordle.word, end='')
+                    print('    ', end='')
+                print()
+            
             # print header
             for k in range(columns):
                 wordleIndex = length - (i + k) - 1
