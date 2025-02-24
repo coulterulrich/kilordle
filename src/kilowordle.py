@@ -1,8 +1,8 @@
 import time
 
 def seedRandom(numWordles):
-    pstNow = time.time() - 2880000
-    return pstNow // 86400000
+    pstNow = time.time() - 2880
+    return pstNow // 86400
 
 def genWorldList(wordles, length = 1000):
     
@@ -35,32 +35,28 @@ class wordle:
         # setup clue buffer
         clue = [0] * len(self.word)
         
-        # loop the guess, fill out correct array
-        # fill out correct clue first so extra misplaced letters don't take priority
+        # loop the guess, fill out correct list and clues
         for i in range(len(word)):
-            letter = word[i]
-            if i >= len(self.word) or letter != self.word[i]:
-                continue
-            clue[i] = 2
-            self.correct[i] = True
-                        
-        # loop the guess, fill out misplaced letters
-        for i in range(len(word)):
-            letter = word[i]
-            if i >= len(self.word) or letter == self.word[i]:
-                continue
+            if i >= len(self.word):
+                break
                 
-            # in the case of multiple letters
-            # mark misplaced if the current clue count is below the letter frequency
-            letterCount = 0
-            for wordLetter in self.word:
-                if wordLetter == letter:
-                    letterCount += 1
-            for j in range(len(clue)):
-                if clue[j] > 0 and word[j] == letter:
-                    letterCount -= 1
-            if (letterCount > 0):
-                clue[i] = 1
+            letter = word[i]
+                
+            if letter == self.word[i]:
+                clue[i] = 2
+                self.correct[i] = True
+            else:
+                totalMisplaced = 0
+                previousMisplaced = 0
+                for j in range(len(self.word)):
+                    if self.word[j] == letter and word[j] != letter:
+                        totalMisplaced += 1
+                                
+                for j in range(i):
+                    if word[j] == letter and self.word[j] != letter:
+                        previousMisplaced += 1
+                        
+                clue[i] = 1 if previousMisplaced < totalMisplaced else 0
         
         # save clue to the clue history
         self.clues.append(clue)
