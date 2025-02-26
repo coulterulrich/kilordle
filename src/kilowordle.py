@@ -29,7 +29,7 @@ class wordle:
         if len(self.clues) <= 0:
             return ''.join(self.correct)
         else:
-            return clues[len(self.clues) - 1]
+            return self.clues[len(self.clues) - 1]
             
     def guess(self, word):
         # setup clue buffer
